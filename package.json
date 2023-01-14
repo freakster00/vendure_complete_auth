@@ -1,0 +1,31 @@
+{
+  "name": "auth_tst",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.3",
+    "@apollo/server": "^4.3.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.4",
+    "@mui/styled-engine-sc": "^5.11.0",
+    "@next/font": "13.1.2",
+    "eslint": "8.31.0",
+    "eslint-config-next": "13.1.2",
+    "gapi-script": "^1.2.0",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
+    "next": "13.1.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-google-login": "^5.2.2",
+    "styled-components": "^5.3.6"
+  }
+}
