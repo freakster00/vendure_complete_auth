@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -14,23 +13,20 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMutation } from '@apollo/client';
 import {signup_gql}  from '.././schemas/mutations/signup';
+import styles from '../styles/signup.module.css'
+import ExternalLoginCard from 'components/ExternalLoginCard';
+import { useSession,signIn,signOut} from 'next-auth/react'
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { CloseFullscreen } from '@mui/icons-material';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 const theme = createTheme();
 
 export default function SignUp() {
+  const { data : session }=useSession()
 
     const [registerUserInitial,{error}]=useMutation(signup_gql)
   const handleSubmit = (event) => {
@@ -53,116 +49,177 @@ export default function SignUp() {
 
         });
       }
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="title"
-                  label="Title"
-                  name="title"
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="phone"
-                  label="Phone Number"
-                  name="phone"
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="./" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+          const handleSetNewPassword=(event)=>{
+            event.preventDefault();
+            const myArray=session.user.name.split(" ")
+            const data = new FormData(event.currentTarget);
+            const ExternalLoginData={
+             firstName:myArray[0],
+             lastName:myArray[1],
+             title:"",
+              email:session.user.email,
+              phoneNumber:"",
+              password:data.get('password'),    
+          }
+          console.log(ExternalLoginData)
+          registerUserInitial({
+            variables:ExternalLoginData
+        }).then((res)=>{
+              console.log("Success")
+            }).catch((error)=>{
+              console.log(error)
+    
+            });
+           
+          }
+
+      const tstsession=""
+      if(!session){
+        return (
+          <div className={styles.loginContainer}>
+            <div className={styles.nativeLoginContainer}>
+            <ThemeProvider theme={theme}>
+              <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                  sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  
+                  <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          autoComplete="given-name"
+                          name="firstName"
+                          required
+                          fullWidth
+                          id="firstName"
+                          label="First Name"
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="lastName"
+                          label="Last Name"
+                          name="lastName"
+                          autoComplete="off"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="title"
+                          label="Title"
+                          name="title"
+                          autoComplete="off"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="email"
+                          label="Email Address"
+                          name="email"
+                          autoComplete="off"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="phone"
+                          label="Phone Number"
+                          name="phone"
+                          autoComplete="off"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          name="password"
+                          label="Password"
+                          type="password"
+                          id="password"
+                          autoComplete="off"
+                        />
+                      </Grid>
+                      
+                    </Grid>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Sign Up
+                    </Button>
+                    <Grid container justifyContent="flex-end">
+                      <Grid item>
+                        <Link href="./" variant="body2">
+                          Already have an account? Sign in
+                        </Link>
+                      </Grid>
+                    </Grid>
+                    
+                  </Box>
+                </Box>
+               
+        
+        <div>
+        
+              
+        </div>
+        
+              </Container>
+            </ThemeProvider>
+            </div>
+           <ExternalLoginCard />
+        
             
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-       
-      </Container>
-    </ThemeProvider>
-  );
+            </div>
+          );
+
+      }
+      else{
+        return (
+
+<div><Card sx={{ maxWidth: 345,height:"450px",margin:"auto",marginTop:"15vh",backgroundColor:"#f2ebd3"}}>
+    <Box
+     component="form"
+     onSubmit={handleSetNewPassword}
+     sx={{
+       '& > :not(style)': { width: '25ch'},
+     }}
+     noValidate
+     autoComplete="off"
+   >
+     <TextField id="standard-basic" label="Set New Password" variant="standard" sx={{marginLeft:"5vw",marginTop:"20vh"}} 
+     name="password"
+     autoComplete="off"/>
+     <TextField id="standard-basic" label="Confirm Password" variant="standard" sx={{marginLeft:"5vw",marginTop:"2vh"}}
+      name="confirmPassword"
+      autoComplete="off"
+     />
+     <Stack direction="row" spacing={2} sx={{marginTop:"3vh",marginLeft:"8vw"}}>
+     <Button variant="contained" color="success" type="submit">
+       Submit
+     </Button>
+   </Stack>
+   </Box>
+   </Card></div>
+
+        )
+      }
+  
 }

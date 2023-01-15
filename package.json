@@ -14,18 +14,21 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
+    "@mui/joy": "^5.0.0-alpha.62",
     "@mui/material": "^5.11.4",
     "@mui/styled-engine-sc": "^5.11.0",
     "@next/font": "13.1.2",
+    "@react-oauth/google": "^0.6.0",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.2",
     "gapi-script": "^1.2.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "next": "13.1.2",
+    "next-auth": "^4.18.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-google-login": "^5.2.2",
+    "react-icons": "^4.7.1",
     "styled-components": "^5.3.6"
   }
 }
