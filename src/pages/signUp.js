@@ -73,8 +73,9 @@ export default function SignUp() {
            
           }
 
-      const tstsession=""
+      
       if(!session){
+
         return (
           <div className={styles.loginContainer}>
             <div className={styles.nativeLoginContainer}>
@@ -191,7 +192,10 @@ export default function SignUp() {
           );
 
       }
-      else{
+     
+        else{
+
+          
         return (
 
 <div><Card sx={{ maxWidth: 345,height:"450px",margin:"auto",marginTop:"15vh",backgroundColor:"#f2ebd3"}}>
@@ -215,11 +219,20 @@ export default function SignUp() {
      <Button variant="contained" color="success" type="submit">
        Submit
      </Button>
+
    </Stack>
+   <Stack direction="row" spacing={2} sx={{marginTop:"3vh",marginLeft:"8vw"}}>
+     <Button variant="outlined" color="secondary" onClick={signOut}>
+       Logout
+     </Button>
+
+   </Stack>
+   
    </Box>
    </Card></div>
 
         )
-      }
+      
+    }
   
 }
